@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="invoicebt"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="421"
+		 pageHeight="595"
+		 columnWidth="361"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="iid" isForPrompting="true" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT
+     invoice.`date` AS invoice_date,
+     invoice.`total` AS invoice_total,
+     invoice.`item_count` AS invoice_item_count,
+     invoice.`payed_amount` AS invoice_payed_amount,
+     invoice.`balance` AS invoice_balance,
+     item.`barcode` AS item_barcode,
+     invoice_details.`unit_price` AS invoice_details_unit_price,
+     invoice_details.`qty` AS invoice_details_qty,
+     invoice_details.`discount` AS invoice_details_discount,
+     payment_type.`type` AS payment_type_type,
+     invoice_details.`sub_total` AS invoice_details_sub_total,
+     user.`user` AS user_user,
+     invoice_details.`item_name` AS invoice_details_item_name
+FROM
+     `invoice` invoice INNER JOIN `invoice_details` invoice_details ON invoice.`invoice_id` = invoice_details.`invoice_invoice_id`
+     INNER JOIN `item` item ON invoice_details.`Item_id` = item.`id`
+     INNER JOIN `payment_type` payment_type ON invoice.`payment_type_id` = payment_type.`id`
+     INNER JOIN `user` user ON invoice.`user_id` = user.`id`
+WHERE
+     invoice.invoice_id = $P{iid}]]></queryString>
+
+	<field name="invoice_date" class="java.lang.String"/>
+	<field name="invoice_total" class="java.lang.Double"/>
+	<field name="invoice_item_count" class="java.lang.Integer"/>
+	<field name="invoice_payed_amount" class="java.lang.Double"/>
+	<field name="invoice_balance" class="java.lang.Double"/>
+	<field name="item_barcode" class="java.lang.String"/>
+	<field name="invoice_details_unit_price" class="java.lang.Double"/>
+	<field name="invoice_details_qty" class="java.lang.Double"/>
+	<field name="invoice_details_discount" class="java.lang.Double"/>
+	<field name="payment_type_type" class="java.lang.String"/>
+	<field name="invoice_details_sub_total" class="java.lang.Double"/>
+	<field name="user_user" class="java.lang.String"/>
+	<field name="invoice_details_item_name" class="java.lang.String"/>
+
+	<variable name="item" class="java.lang.Integer" resetType="Report" calculation="Count">
+		<variableExpression><![CDATA[$F{item_barcode}]]></variableExpression>
+	</variable>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="70"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="0"
+						width="360"
+						height="21"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TeamWorks]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="45"
+						width="86"
+						height="14"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Tel : 037 5670348]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="77"
+						y="31"
+						width="209"
+						height="14"
+						key="staticText-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[No. 193, Colombo, Kurunagala, Sri Lnaka]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="59"
+						width="360"
+						height="8"
+						key="staticText-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="6"/>
+					</textElement>
+				<text><![CDATA[***************************************]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="112"
+						y="16"
+						width="134"
+						height="16"
+						key="staticText-30"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Advertising (Pvt) Ltd]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="229"
+						y="45"
+						width="130"
+						height="14"
+						key="staticText-42"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[www.teamworksadd.com]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="66"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="310"
+						y="40"
+						width="47"
+						height="22"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{iid}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="55"
+						y="46"
+						width="81"
+						height="16"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{invoice_date}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="361"
+						height="17"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[INVOICE]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="55"
+						y="32"
+						width="82"
+						height="14"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{user_user}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="1"
+						y="32"
+						width="41"
+						height="12"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[CASHIER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="46"
+						width="30"
+						height="16"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[DATE    ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="40"
+						width="24"
+						height="12"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[NO :]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="1"
+						y="62"
+						width="360"
+						height="2"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch" pen="Dotted"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="49"
+						y="-263"
+						width="88"
+						height="15"
+						key="textField-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_total}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="3"
+						y="-263"
+						width="30"
+						height="15"
+						key="staticText-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Total ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="49"
+						y="-248"
+						width="88"
+						height="13"
+						key="textField-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_payed_amount}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="49"
+						y="-235"
+						width="88"
+						height="12"
+						key="textField-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_balance}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="3"
+						y="-248"
+						width="30"
+						height="13"
+						key="staticText-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Paid]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="3"
+						y="-235"
+						width="30"
+						height="12"
+						key="staticText-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Balance    :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="55"
+						y="-263"
+						width="6"
+						height="15"
+						key="staticText-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="55"
+						y="-248"
+						width="6"
+						height="13"
+						key="staticText-25"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="55"
+						y="-235"
+						width="6"
+						height="12"
+						key="staticText-26"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="3"
+						y="-266"
+						width="134"
+						height="3"
+						key="line-2"/>
+					<graphicElement stretchType="NoStretch" pen="Dotted"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="3"
+						y="-223"
+						width="134"
+						height="10"
+						key="staticText-27"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="6"/>
+					</textElement>
+				<text><![CDATA[THANK YOU COME AGAIN!]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="3"
+						y="-213"
+						width="134"
+						height="9"
+						forecolor="#333333"
+						key="staticText-28"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="6"/>
+					</textElement>
+				<text><![CDATA[DC Softzone Technologies - 0771 068 220]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="3"
+						y="-204"
+						width="134"
+						height="9"
+						forecolor="#666666"
+						key="staticText-29"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="6"/>
+					</textElement>
+				<text><![CDATA["we ease you to reach your dreams"]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="17"
+						width="360"
+						height="8"
+						key="staticText-41"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="6"/>
+					</textElement>
+				<text><![CDATA[***************************************]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="22"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="6"
+						width="66"
+						height="15"
+						key="staticText-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Item]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="314"
+						y="6"
+						width="47"
+						height="15"
+						key="staticText-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Sub Total (Rs)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="252"
+						y="6"
+						width="49"
+						height="15"
+						key="staticText-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Discount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="200"
+						y="6"
+						width="49"
+						height="15"
+						key="staticText-37"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Qty]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="24"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="15"
+						y="6"
+						width="53"
+						height="13"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{item_barcode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="171"
+						y="6"
+						width="40"
+						height="13"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_details_unit_price}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="222"
+						y="6"
+						width="27"
+						height="13"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_details_qty}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="217"
+						y="6"
+						width="12"
+						height="13"
+						key="staticText-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[*]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="314"
+						y="5"
+						width="47"
+						height="13"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_details_sub_total}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="6"
+						width="14"
+						height="15"
+						key="textField-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="49"
+						y="6"
+						width="123"
+						height="15"
+						key="textField-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{invoice_details_item_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="260"
+						y="6"
+						width="40"
+						height="13"
+						key="textField-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_details_discount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="30"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="55"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="0"
+						width="360"
+						height="16"
+						key="staticText-33"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[THANK YOU COME AGAIN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="41"
+						width="361"
+						height="13"
+						forecolor="#666666"
+						key="staticText-34"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA["we make you ease to reach your dreams"]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="28"
+						width="360"
+						height="15"
+						forecolor="#333333"
+						key="staticText-35"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[DC Softzone Technologies - 077 106 8220 - 071 557 3506 - 077 406 1783]]></text>
+				</staticText>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="138"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="222"
+						y="18"
+						width="30"
+						height="15"
+						key="staticText-31"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Total ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="222"
+						y="39"
+						width="30"
+						height="13"
+						key="staticText-32"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Paid]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="4"
+						width="361"
+						height="3"
+						key="line-3"/>
+					<graphicElement stretchType="NoStretch" pen="Dotted"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="273"
+						y="39"
+						width="88"
+						height="13"
+						key="textField-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_payed_amount}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="273"
+						y="19"
+						width="88"
+						height="15"
+						key="textField-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_total}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="273"
+						y="59"
+						width="88"
+						height="14"
+						key="textField-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{invoice_balance}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="222"
+						y="59"
+						width="37"
+						height="13"
+						key="staticText-36"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Balance]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="1"
+						y="78"
+						width="360"
+						height="0"
+						key="line-4"/>
+					<graphicElement stretchType="NoStretch" pen="Dotted"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="273"
+						y="52"
+						width="88"
+						height="0"
+						key="line-5"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</summary>
+</jasperReport>
